@@ -7,7 +7,19 @@ import (
 )
 
 func MainPage() echo.HandlerFunc {
-	return func(c echo.Context) error { //c をいじって Request, Responseを色々する
+	return func(c echo.Context) error {
 		return c.String(http.StatusOK, "Hello World")
+	}
+}
+
+func GetPage() echo.HandlerFunc {
+	return func(c echo.Context) error {
+		return c.String(http.StatusOK, "get")
+	}
+}
+
+func PostPage() echo.HandlerFunc {
+	return func(c echo.Context) error {
+		return c.String(http.StatusOK, "post")
 	}
 }
