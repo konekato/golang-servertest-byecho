@@ -1,6 +1,6 @@
 ---
 name: bug report
-about: バグisuueのテンプレ
+about: バグissueのテンプレ
 title: ''
 labels: ''
 assignees: ''
