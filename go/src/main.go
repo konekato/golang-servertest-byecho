@@ -16,7 +16,9 @@ func main() {
 	e.Use(middleware.Recover())
 
 	// Routes
-	e.GET("/", handler.MainPage())
+	e.GET("/user", handler.MainPage())
+	e.GET("/user/get/:id", handler.GetUser())
+	e.POST("/user/post/:id", handler.PostUser())
 
 	// Start server
 	e.Logger.Fatal(e.Start(":1323"))
