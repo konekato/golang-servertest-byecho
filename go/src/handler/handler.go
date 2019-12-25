@@ -12,14 +12,16 @@ func MainPage() echo.HandlerFunc {
 	}
 }
 
-func GetPage() echo.HandlerFunc {
+func GetUser() echo.HandlerFunc {
 	return func(c echo.Context) error {
-		return c.String(http.StatusOK, "get")
+		id := c.Param("id")
+		return c.String(http.StatusOK, id)
 	}
 }
 
-func PostPage() echo.HandlerFunc {
+func PostUser() echo.HandlerFunc {
 	return func(c echo.Context) error {
-		return c.String(http.StatusOK, "post")
+		id := c.Param("id")
+		return c.String(http.StatusOK, id)
 	}
 }
