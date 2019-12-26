@@ -18,7 +18,7 @@ func main() {
 	// Routes
 	e.GET("/user", handler.MainPage())
 	e.GET("/user/get/:id", handler.GetUser())
-	e.POST("/user/post/:id", handler.PostUser())
+	e.POST("/user/post", handler.PostUser())
 
 	// Start server
 	e.Logger.Fatal(e.Start(":1323"))
