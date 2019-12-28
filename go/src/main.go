@@ -8,6 +8,7 @@ import (
 	"github.com/labstack/echo/middleware"
 
 	"handler"
+	"interceptor"
 )
 
 type Template struct {
@@ -33,7 +34,7 @@ func main() {
 
 	// Routes
 	e.GET("/user", handler.MainPage())
-	e.GET("/user/get/:id", handler.GetUser())
+	e.GET("/user/get/:id", handler.GetUser(), interceptor.BasicAuth())
 	e.POST("/user/post", handler.PostUser())
 	e.GET("/user/page1", handler.Template())
 
