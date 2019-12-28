@@ -33,3 +33,32 @@ func PostUser() echo.HandlerFunc {
 		return c.JSON(http.StatusCreated, u)
 	}
 }
+
+type ServiceInfo struct {
+	Title string
+}
+
+var serviceInfo = ServiceInfo{
+	"サイトのタイトル",
+}
+
+func Template() echo.HandlerFunc {
+	return func(c echo.Context) error {
+		// テンプレートに渡す値
+
+		data := struct {
+			ServiceInfo
+			Content_a string
+			Content_b string
+			Content_c string
+			Content_d string
+		}{
+			ServiceInfo: serviceInfo,
+			Content_a:   "雨が降っています。",
+			Content_b:   "明日も雨でしょうか。",
+			Content_c:   "台風が近づいています。",
+			Content_d:   "Jun/11/2018",
+		}
+		return c.Render(http.StatusOK, "page1", data)
+	}
+}
