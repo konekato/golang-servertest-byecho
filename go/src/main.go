@@ -71,22 +71,30 @@ func main() {
 	}
 	defer db.Close()
 
-	//データベースへクエリを送信。引っ張ってきたデータがrowsに入る。
-	rows, err := db.Query("SELECT * FROM users")
-	defer rows.Close()
-	if err != nil {
-		panic(err.Error())
+	// //データベースへクエリを送信。引っ張ってきたデータがrowsに入る。
+	// rows, err := db.Query("SELECT * FROM users")
+	// defer rows.Close()
+	// if err != nil {
+	// 	panic(err.Error())
+	// }
+
+	// //レコード一件一件をあらかじめ用意しておいた構造体に当てはめていく。
+	// for rows.Next() {
+	// 	var person Person //構造体Person型の変数personを定義
+	// 	err := rows.Scan(&person.ID, &person.Name)
+
+	// 	if err != nil {
+	// 		panic(err.Error())
+	// 	}
+	// 	fmt.Println(person.ID, person.Name)
+
+	// }
+
+	var person Person
+
+	if err := db.QueryRow("SELECT * FROM users WHERE id = 3").Scan(&person.ID, &person.Name); err != nil {
+		log.Fatal(err)
 	}
 
-	//レコード一件一件をあらかじめ用意しておいた構造体に当てはめていく。
-	for rows.Next() {
-		var person Person //構造体Person型の変数personを定義
-		err := rows.Scan(&person.ID, &person.Name)
-
-		if err != nil {
-			panic(err.Error())
-		}
-		fmt.Println(person.ID, person.Name) //結果　1 yamada 2 suzuki
-
-	}
+	fmt.Println(person.ID, person.Name)
 }
