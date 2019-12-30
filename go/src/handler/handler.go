@@ -28,13 +28,42 @@ type User struct {
 	Email string `query:"id"`
 }
 
-func DBOut() echo.HandlerFunc {
+func DBIn() echo.HandlerFunc {
 	return func(c echo.Context) error {
-		//mysqlへ接続
+		// mysqlへ接続
 		db, err := sql.Open("mysql", "root@/go_db")
 		log.Println("Connected to mysql.")
 
-		//接続でエラーが発生した場合の処理
+		// 接続でエラーが発生した場合の処理
+		if err != nil {
+			log.Fatal(err)
+		}
+		defer db.Close()
+
+		ins, err := db.Prepare("INSERT INTO users(id, name) VALUES(?, ?)")
+		if err != nil {
+			log.Fatal(err)
+		}
+		ins.Exec(3, "l")
+
+		// u := new(User)
+
+		// // データの取得
+		// if err := db.QueryRow("SELECT * FROM users WHERE id = 1").Scan(&u.Email, &u.Name); err != nil {
+		// 	log.Fatal(err)
+		// }
+
+		return c.JSON(http.StatusOK, err)
+	}
+}
+
+func DBOut() echo.HandlerFunc {
+	return func(c echo.Context) error {
+		// mysqlへ接続
+		db, err := sql.Open("mysql", "root@/go_db")
+		log.Println("Connected to mysql.")
+
+		// 接続でエラーが発生した場合の処理
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -42,7 +71,8 @@ func DBOut() echo.HandlerFunc {
 
 		u := new(User)
 
-		if err := db.QueryRow("SELECT * FROM users WHERE id = 1").Scan(&u.Email, &u.Name); err != nil {
+		// データの取得
+		if err := db.QueryRow("SELECT * FROM users WHERE id = 3").Scan(&u.Email, &u.Name); err != nil {
 			log.Fatal(err)
 		}
 

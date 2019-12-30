@@ -34,7 +34,8 @@ func main() {
 
 	// Routes
 	e.GET("/user", handler.MainPage())
-	e.GET("/user/get", handler.DBOut())
+	e.GET("/user/get/dbin", handler.DBIn())
+	e.GET("/user/get/dbout", handler.DBOut())
 	e.GET("/user/get/:id", handler.GetUser(), interceptor.BasicAuth())
 	e.POST("/user/post", handler.PostUser())
 	e.GET("/user/page1", handler.Template())
