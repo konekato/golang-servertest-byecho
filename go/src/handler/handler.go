@@ -1,8 +1,12 @@
 package handler
 
 import (
+	"database/sql"
 	"net/http"
 
+	"log"
+
+	_ "github.com/go-sql-driver/mysql"
 	"github.com/labstack/echo"
 )
 
@@ -20,8 +24,75 @@ func GetUser() echo.HandlerFunc {
 }
 
 type User struct {
-	Name  string `json:"name" xml:"name" form:"name" query:"name"`
-	Email string `json:"email" xml:"email" form:"email" query:"email"`
+	Name  string `query:"name"`
+	Email string `query:"id"`
+}
+
+func DBIn() echo.HandlerFunc {
+	return func(c echo.Context) error {
+		// mysqlへ接続
+		db, err := sql.Open("mysql", "root@/go_db")
+		log.Println("Connected to mysql.")
+
+		// 接続でエラーが発生した場合の処理
+		if err != nil {
+			log.Fatal(err)
+		}
+		defer db.Close()
+
+		ins, err := db.Prepare("INSERT INTO users(id, name) VALUES(?, ?)")
+		if err != nil {
+			log.Fatal(err)
+		}
+		ins.Exec(3, "l")
+
+		return c.JSON(http.StatusOK, err)
+	}
+}
+
+func DBOut() echo.HandlerFunc {
+	return func(c echo.Context) error {
+		// mysqlへ接続
+		db, err := sql.Open("mysql", "root@/go_db")
+		log.Println("Connected to mysql.")
+
+		// 接続でエラーが発生した場合の処理
+		if err != nil {
+			log.Fatal(err)
+		}
+		defer db.Close()
+
+		u := new(User)
+
+		// データの取得
+		if err := db.QueryRow("SELECT * FROM users WHERE id = 3").Scan(&u.Email, &u.Name); err != nil {
+			log.Fatal(err)
+		}
+
+		return c.JSON(http.StatusOK, u)
+	}
+}
+
+func DBUpdate() echo.HandlerFunc {
+	return func(c echo.Context) error {
+		// mysqlへ接続
+		db, err := sql.Open("mysql", "root@/go_db")
+		log.Println("Connected to mysql.")
+
+		// 接続でエラーが発生した場合の処理
+		if err != nil {
+			log.Fatal(err)
+		}
+		defer db.Close()
+
+		upd, err := db.Prepare("UPDATE users SET name = ? WHERE id = ?")
+		if err != nil {
+			log.Fatal(err)
+		}
+		upd.Exec("lll", 3)
+
+		return c.JSON(http.StatusOK, err)
+	}
 }
 
 func PostUser() echo.HandlerFunc {
