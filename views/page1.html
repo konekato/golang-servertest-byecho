@@ -1,7 +1,12 @@
 {{define "page1"}}
-  {{template "header" .}}
-<div style = "color: blue;">{{.Content_a}}</div>
-<div>{{.Content_b}}</div>
-<div>{{.Content_c}}</div>
-<div>{{.Content_d}}</div>
+  {{template "head" .}}
+<html>
+  <body>
+      <h1>{{.ServiceInfo.Title}}</h1>
+      <div style = "color: blue;">{{.Content_a}}</div>
+      <div>{{.Content_b}}</div>
+      <div>{{.Content_c}}</div>
+      <div>{{.Content_d}}</div>
+  </body>
+</html>
 {{end}}

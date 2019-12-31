@@ -42,7 +42,7 @@ var serviceInfo = ServiceInfo{
 	"サイトのタイトル",
 }
 
-func Template() echo.HandlerFunc {
+func Page1Template() echo.HandlerFunc {
 	return func(c echo.Context) error {
 		// テンプレートに渡す値
 
@@ -60,5 +60,26 @@ func Template() echo.HandlerFunc {
 			Content_d:   "Jun/11/2018",
 		}
 		return c.Render(http.StatusOK, "page1", data)
+	}
+}
+
+func Page2Template() echo.HandlerFunc {
+	return func(c echo.Context) error {
+		// テンプレートに渡す値
+
+		data := struct {
+			ServiceInfo
+			Content_a string
+			Content_b string
+			Content_c string
+			Content_d string
+		}{
+			ServiceInfo: serviceInfo,
+			Content_a:   "晴れています。",
+			Content_b:   "明日も雨でしょうか。",
+			Content_c:   "台風が近づいています。",
+			Content_d:   "Jun/12/2018",
+		}
+		return c.Render(http.StatusOK, "page2", data)
 	}
 }
