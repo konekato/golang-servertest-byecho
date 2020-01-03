@@ -154,3 +154,15 @@ func Page2Template() echo.HandlerFunc {
 		return c.Render(http.StatusOK, "page2", data)
 	}
 }
+
+func PostForm() echo.HandlerFunc {
+	return func(c echo.Context) error {
+		return c.Render(http.StatusOK, "posttest", nil)
+	}
+}
+
+func PostTest() echo.HandlerFunc {
+	return func(c echo.Context) error {
+		return c.String(http.StatusOK, "Hello World")
+	}
+}
