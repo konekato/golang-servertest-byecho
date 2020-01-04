@@ -24,8 +24,8 @@ func GetUser() echo.HandlerFunc {
 }
 
 type User struct {
-	Name  string `query:"name"`
-	Email string `query:"id"`
+	Id   string `query:"id" xml:"id"`
+	Name string `query:"name" xml:"name"`
 }
 
 func DBIn() echo.HandlerFunc {
@@ -65,7 +65,7 @@ func DBOut() echo.HandlerFunc {
 		u := new(User)
 
 		// データの取得
-		if err := db.QueryRow("SELECT * FROM users WHERE id = 3").Scan(&u.Email, &u.Name); err != nil {
+		if err := db.QueryRow("SELECT * FROM users WHERE id = 3").Scan(&u.Id, &u.Name); err != nil {
 			log.Fatal(err)
 		}
 
@@ -163,7 +163,9 @@ func PostForm() echo.HandlerFunc {
 
 func PostTest() echo.HandlerFunc {
 	return func(c echo.Context) error {
-		name := c.FormValue("name")
-		return c.String(http.StatusOK, name)
+		u := new(User)
+		u.Id = c.FormValue("id")
+		u.Name = c.FormValue(("name"))
+		return c.JSON(http.StatusOK, u)
 	}
 }
