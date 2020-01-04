@@ -163,6 +163,7 @@ func PostForm() echo.HandlerFunc {
 
 func PostTest() echo.HandlerFunc {
 	return func(c echo.Context) error {
-		return c.String(http.StatusOK, "Hello World")
+		name := c.FormValue("name")
+		return c.String(http.StatusOK, name)
 	}
 }
