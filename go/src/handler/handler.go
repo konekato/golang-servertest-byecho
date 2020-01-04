@@ -166,6 +166,24 @@ func PostTest() echo.HandlerFunc {
 		u := new(User)
 		u.Id = c.FormValue("id")
 		u.Name = c.FormValue(("name"))
+
+		// mysqlへ接続
+		db, err := sql.Open("mysql", "root@/go_db")
+		log.Println("Connected to mysql.")
+
+		// 接続でエラーが発生した場合の処理
+		if err != nil {
+			log.Fatal(err)
+		}
+		defer db.Close()
+
+		// INSERT
+		ins, err := db.Prepare("INSERT INTO users(id, name) VALUES(?, ?)")
+		if err != nil {
+			log.Fatal(err)
+		}
+		ins.Exec(u.Id, u.Name)
+
 		return c.JSON(http.StatusOK, u)
 	}
 }
