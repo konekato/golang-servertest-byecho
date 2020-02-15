@@ -1,2 +1,2 @@
 # golang-servertest-byecho
-go servertest by echo
+go テスト用リポジトリ（echoをフレームワークとして使用）
